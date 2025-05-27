@@ -1,0 +1,131 @@
+﻿<Window x:Class="GraphSolver.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GraphSolver"
+        mc:Ignorable="d"
+        Title="MST Solver" Height="700" Width="1200" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1" Margin="10" Background="White">
+            <Canvas x:Name="GraphCanvas" Background="White" MouseLeftButtonDown="GraphCanvas_MouseLeftButtonDown"/>
+        </Border>
+
+        <StackPanel Grid.Column="1" Margin="10">
+            <TextBlock Text="Керування графом" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+            <GroupBox Header="Згенерувати граф" Margin="0,0,0,10">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Кількість вершин (1-40):" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="NumVerticesTextBox" Grid.Column="1" MaxLength="2" PreviewTextInput="NumberValidationTextBox"/>
+                    </Grid>
+                    <Button Content="Згенерувати граф" Margin="0,10,0,0" Click="GenerateGraph_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Додати ребро вручну" Margin="0,0,0,10">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Вершина-джерело ID:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="EdgeSourceIdTextBox" Grid.Column="1" MaxLength="2" PreviewTextInput="NumberValidationTextBox"/>
+                    </Grid>
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Вершина-призначення ID:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="EdgeDestinationIdTextBox" Grid.Column="1" MaxLength="2" PreviewTextInput="NumberValidationTextBox"/>
+                    </Grid>
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Вага ребра (число, до 5 цифр):" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="EdgeWeightTextBox" Grid.Column="1" MaxLength="5" PreviewTextInput="DecimalValidationTextBox"/>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="Додати ребро" Click="AddEdgeManual_Click" Margin="0,0,10,0"/>
+                        <Button Content="Додати випадкове ребро" Click="AddRandomEdge_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Видалення" Margin="0,0,0,10">
+                <StackPanel Margin="5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ID вершини:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="DeleteVertexIdTextBox" Grid.Column="1" MaxLength="2" PreviewTextInput="NumberValidationTextBox"/>
+                    </Grid>
+                    <Button Content="Видалити вершину" Margin="0,5,0,0" Click="DeleteVertexById_Click"/>
+
+                    <Separator Margin="0,10"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ID джерела ребра:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="DeleteEdgeSourceIdTextBox" Grid.Column="1" MaxLength="2" PreviewTextInput="NumberValidationTextBox"/>
+                    </Grid>
+                    <Grid Margin="0,5,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="ID призначення ребра:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                        <TextBox x:Name="DeleteEdgeDestinationIdTextBox" Grid.Column="1" MaxLength="2" PreviewTextInput="NumberValidationTextBox"/>
+                    </Grid>
+                    <Button Content="Видалити ребро" Margin="0,5,0,0" Click="DeleteEdgeById_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Алгоритм остовного дерева" Margin="0,0,0,10">
+                <StackPanel Margin="5">
+                    <RadioButton x:Name="PrimRadioButton" Content="Алгоритм Прима" IsChecked="True"/>
+                    <RadioButton x:Name="KruskalRadioButton" Content="Алгоритм Крускала" Margin="0,5,0,0"/>
+                    <RadioButton x:Name="BoruvkaRadioButton" Content="Алгоритм Борувки" Margin="0,5,0,0"/>
+                    <Button Content="Побудувати МОД" Margin="0,10,0,0" Click="BuildMST_Click"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="Результати" Margin="0,0,0,10">
+                <StackPanel Margin="5">
+                    <TextBlock x:Name="AlgorithmComplexityTextBlock"
+                               Text="Практична складність: -"
+                               Margin="0,0,0,5"
+                               FontWeight="Bold"
+                               FontSize="14"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Name="ExecutionTimeTextBlock" Text="Час виконання:" FontWeight="Bold" Margin="0,0,0,5"/>
+                    <TextBox x:Name="ResultOutputTextBox" IsReadOnly="True" Height="100" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button Content="Зберегти результат" Click="SaveResult_Click" Margin="0,0,10,0"/>
+                        <Button Content="Очистити граф" Click="ClearGraph_Click"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+    </Grid>
+</Window>
