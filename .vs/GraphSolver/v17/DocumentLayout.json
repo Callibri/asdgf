@@ -3,12 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\algorithms\\boruvkaalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:algorithms\\boruvkaalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:MainWindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\algorithms\\ispanningtreealgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:algorithms\\ispanningtreealgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\algorithms\\icomplexityanalyzable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:algorithms\\icomplexityanalyzable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\algorithms\\kruskalalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:algorithms\\kruskalalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\algorithms\\disjointset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:algorithms\\disjointset.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\algorithms\\primalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:algorithms\\primalgorithm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\entities\\edge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:entities\\edge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\entities\\vertex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:entities\\vertex.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\graphcomponents\\graph.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:graphcomponents\\graph.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\rendering\\graphrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:rendering\\graphrenderer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|c:\\users\\mykola\\desktop\\\u043F\u0440\u0438\u043A\u043B\u0430\u0434\\graphsolver\\mainwindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{3D4AC7EA-DE44-4AE3-BF99-F6D954E9D689}|GraphSolver.csproj|solutionrelative:mainwindow.xaml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,24 +62,170 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IComplexityAnalyzable.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\IComplexityAnalyzable.cs",
+              "RelativeDocumentMoniker": "Algorithms\\IComplexityAnalyzable.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\IComplexityAnalyzable.cs",
+              "RelativeToolTip": "Algorithms\\IComplexityAnalyzable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T00:21:11.192Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Vertex.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Entities\\Vertex.cs",
+              "RelativeDocumentMoniker": "Entities\\Vertex.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Entities\\Vertex.cs",
+              "RelativeToolTip": "Entities\\Vertex.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T23:41:30.7Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "KruskalAlgorithm.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\KruskalAlgorithm.cs",
+              "RelativeDocumentMoniker": "Algorithms\\KruskalAlgorithm.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\KruskalAlgorithm.cs",
+              "RelativeToolTip": "Algorithms\\KruskalAlgorithm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T22:57:07.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "BoruvkaAlgorithm.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\BoruvkaAlgorithm.cs",
+              "RelativeDocumentMoniker": "Algorithms\\BoruvkaAlgorithm.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\BoruvkaAlgorithm.cs",
+              "RelativeToolTip": "Algorithms\\BoruvkaAlgorithm.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAAAFYAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T23:39:37.376Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ISpanningTreeAlgorithm.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\ISpanningTreeAlgorithm.cs",
+              "RelativeDocumentMoniker": "Algorithms\\ISpanningTreeAlgorithm.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\ISpanningTreeAlgorithm.cs",
+              "RelativeToolTip": "Algorithms\\ISpanningTreeAlgorithm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T00:21:56.801Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DisjointSet.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\DisjointSet.cs",
+              "RelativeDocumentMoniker": "Algorithms\\DisjointSet.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\DisjointSet.cs",
+              "RelativeToolTip": "Algorithms\\DisjointSet.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-28T00:20:29.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Graph.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\GraphComponents\\Graph.cs",
+              "RelativeDocumentMoniker": "GraphComponents\\Graph.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\GraphComponents\\Graph.cs",
+              "RelativeToolTip": "GraphComponents\\Graph.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T23:41:48.341Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Edge.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Entities\\Edge.cs",
+              "RelativeDocumentMoniker": "Entities\\Edge.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Entities\\Edge.cs",
+              "RelativeToolTip": "Entities\\Edge.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAAACsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T23:41:36.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PrimAlgorithm.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\PrimAlgorithm.cs",
+              "RelativeDocumentMoniker": "Algorithms\\PrimAlgorithm.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Algorithms\\PrimAlgorithm.cs",
+              "RelativeToolTip": "Algorithms\\PrimAlgorithm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T22:57:07.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GraphRenderer.cs",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Rendering\\GraphRenderer.cs",
+              "RelativeDocumentMoniker": "Rendering\\GraphRenderer.cs",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\Rendering\\GraphRenderer.cs",
+              "RelativeToolTip": "Rendering\\GraphRenderer.cs",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAAAHAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-27T23:42:06.252Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-28T00:15:42.297Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAAAM8AAAB9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-27T20:50:31.618Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 12,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Mykola\\Desktop\\\u041F\u0440\u0438\u043A\u043B\u0430\u0434\\GraphSolver\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",

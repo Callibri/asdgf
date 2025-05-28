@@ -18,3 +18,4 @@ C:\Users\Mykola\Desktop\Приклад\GraphSolver\obj\Debug\net8.0-windows\refi
 C:\Users\Mykola\Desktop\Приклад\GraphSolver\obj\Debug\net8.0-windows\GraphSolver.pdb
 C:\Users\Mykola\Desktop\Приклад\GraphSolver\obj\Debug\net8.0-windows\GraphSolver.genruntimeconfig.cache
 C:\Users\Mykola\Desktop\Приклад\GraphSolver\obj\Debug\net8.0-windows\ref\GraphSolver.dll
+C:\Users\Mykola\Desktop\Приклад\GraphSolver\obj\Debug\net8.0-windows\GraphSolver.sourcelink.json

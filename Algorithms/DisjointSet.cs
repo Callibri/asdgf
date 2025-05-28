@@ -1,11 +1,9 @@
-﻿// File: DisjointSet.cs
-using GraphSolver.Entities;
+﻿using GraphSolver.Entities;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace GraphSolver.Algorithms
 {
-    // Допоміжний клас для системи непересічних множин (Disjoint Set Union - DSU)
     public class DisjointSet
     {
         private readonly Dictionary<Vertex, Vertex> parent = new Dictionary<Vertex, Vertex>();

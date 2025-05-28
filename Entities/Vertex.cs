@@ -1,5 +1,4 @@
-﻿// File: Vertex.cs
-namespace GraphSolver.Entities
+﻿namespace GraphSolver.Entities
 {
     public class Vertex
     {

@@ -15,18 +15,14 @@ using GraphSolver.Rendering;
 
 namespace GraphSolver
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         private Graph currentGraph = new Graph();
         private ISpanningTreeAlgorithm[] algorithms;
         private Random rand = new Random();
 
-        // Додаємо словник для зберігання фіксованих позицій вершин
         private Dictionary<int, Point> fixedVertexPositions = new Dictionary<int, Point>();
-        // Зберігаємо останню кількість вершин, для якої були зафіксовані позиції
         private int lastFixedVertexCount = 0;
 
         public MainWindow()
@@ -39,13 +35,12 @@ namespace GraphSolver
                 new BoruvkaAlgorithm()
             };
             DrawGraph();
-            AttachInputValidationHandlers(); // Викликаємо метод для прикріплення обробників
+            AttachInputValidationHandlers(); 
         }
 
-        // Метод для прикріплення обробників валідації вводу
+    
         private void AttachInputValidationHandlers()
         {
-            // Для числових полів (макс. 2 цифри). MaxLength задано в XAML.
             if (NumVerticesTextBox != null) NumVerticesTextBox.PreviewTextInput += NumberValidationTextBox;
             if (EdgeSourceIdTextBox != null) EdgeSourceIdTextBox.PreviewTextInput += NumberValidationTextBox;
             if (EdgeDestinationIdTextBox != null) EdgeDestinationIdTextBox.PreviewTextInput += NumberValidationTextBox;
@@ -53,39 +48,31 @@ namespace GraphSolver
             if (DeleteEdgeSourceIdTextBox != null) DeleteEdgeSourceIdTextBox.PreviewTextInput += NumberValidationTextBox;
             if (DeleteEdgeDestinationIdTextBox != null) DeleteEdgeDestinationIdTextBox.PreviewTextInput += NumberValidationTextBox;
 
-            // Для поля ваги (цифри та одна крапка, макс. 5 символів). MaxLength задано в XAML.
             if (EdgeWeightTextBox != null) EdgeWeightTextBox.PreviewTextInput += DecimalValidationTextBox;
         }
 
-        // Обробник подій для числових TextBox (ID вершин, кількість вершин)
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            // Дозволяє лише цифри.
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        // Обробник подій для TextBox ваги (цифри та одна крапка)
         private void DecimalValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             TextBox textBox = sender as TextBox;
             if (textBox == null) return;
 
-            // Дозволити лише одну крапку та цифри
             bool isNumber = Regex.IsMatch(e.Text, "[0-9]");
             bool isDot = (e.Text == ".");
 
             if (isDot && textBox.Text.Contains("."))
             {
-                // Якщо вже є крапка, не дозволяти додавати ще одну
                 e.Handled = true;
             }
             else if (!isNumber && !isDot)
             {
-                // Якщо не цифра і не крапка, заборонити
                 e.Handled = true;
             }
-            // MaxLength, заданий в XAML, подбає про загальну довжину (5 символів).
         }
 
         private int GetNextAvailableVertexId()
@@ -99,7 +86,7 @@ namespace GraphSolver
 
         private void GraphCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            const int MAX_VERTICES_MANUAL = 40; // Максимальна кількість вершин для додавання вручну
+            const int MAX_VERTICES_MANUAL = 40; 
             if (currentGraph.Vertices.Count >= MAX_VERTICES_MANUAL)
             {
                 MessageBox.Show($"Досягнуто максимальну кількість вершин ({MAX_VERTICES_MANUAL}). Нові вершини не можуть бути додані вручну.", "Обмеження вершин", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -114,10 +101,11 @@ namespace GraphSolver
 
         private void GenerateGraph_Click(object sender, RoutedEventArgs e)
         {
-            GraphCanvas.Children.Clear();
-            ClearResults();
+            currentGraph.Clear(); 
+            fixedVertexPositions.Clear(); 
+            lastFixedVertexCount = 0; 
 
-            const int MAX_VERTICES = 40; // Максимальна кількість вершин для генерації та валідації вводу
+            const int MAX_VERTICES = 40; 
             double baseVertexSize = 50;
 
             if (!int.TryParse(NumVerticesTextBox.Text, out int numVertices) || numVertices <= 0 || numVertices > MAX_VERTICES)
@@ -126,7 +114,6 @@ namespace GraphSolver
                 return;
             }
 
-            // --- ПОЧАТОК: Виправлення для графа з однією вершиною ---
             if (numVertices == 1)
             {
                 currentGraph.Clear();
@@ -139,9 +126,8 @@ namespace GraphSolver
                 currentGraph.AddVertex(new Vertex(1, center_x, center_y));
                 DrawGraph(baseVertexSize);
                 MessageBox.Show("Згенеровано граф з однією вершиною.", "Генерація графу", MessageBoxButton.OK, MessageBoxImage.Information);
-                return; // Завершуємо виконання методу, оскільки граф з 1 вершиною вже згенеровано
+                return; 
             }
-            // --- КІНЕЦЬ: Виправлення для графа з однією вершиною ---
 
 
             if (numVertices != lastFixedVertexCount || fixedVertexPositions.Count == 0)
@@ -166,16 +152,13 @@ namespace GraphSolver
                 radii.Add(middleRadius);
                 radii.Add(innerRadius);
 
-                // Розподіл вершин по колах
-                // Використовуємо більш надійний розподіл, щоб уникнути від'ємних значень або некоректних сум
-                int[] counts = new int[3]; // 0: outer, 1: middle, 2: inner
+                
+                int[] counts = new int[3]; 
 
-                // Спочатку спробуємо розподілити відповідно до відсотків
                 counts[0] = (int)Math.Floor(numVertices * 0.60);
                 counts[1] = (int)Math.Floor(numVertices * 0.30);
-                counts[2] = numVertices - counts[0] - counts[1]; // Решта йде у внутрішнє коло
-
-                // Коригуємо, щоб сума була точно numVertices і не було від'ємних значень
+                counts[2] = numVertices - counts[0] - counts[1]; 
+  
                 for (int i = 0; i < counts.Length; i++)
                 {
                     if (counts[i] < 0) counts[i] = 0;
@@ -184,19 +167,18 @@ namespace GraphSolver
                 int currentSum = counts.Sum();
                 while (currentSum < numVertices)
                 {
-                    // Додаємо по одній, починаючи з зовнішнього кола
+                    
                     if (counts[0] < numVertices) { counts[0]++; }
                     else if (counts[1] < numVertices) { counts[1]++; }
-                    else { counts[2]++; } // Якщо зовнішнє та середнє заповнені, додаємо у внутрішнє
+                    else { counts[2]++; } 
                     currentSum = counts.Sum();
                 }
 
                 while (currentSum > numVertices)
                 {
-                    // Віднімаємо по одній, починаючи з внутрішнього кола
                     if (counts[2] > 0) { counts[2]--; }
                     else if (counts[1] > 0) { counts[1]--; }
-                    else { counts[0]--; } // Якщо внутрішнє та середнє порожні, віднімаємо від зовнішнього
+                    else { counts[0]--; } 
                     currentSum = counts.Sum();
                 }
 
@@ -209,11 +191,11 @@ namespace GraphSolver
 
 
                 int currentVertexId = 1;
-                for (int c = 0; c < radii.Count; c++) // Проходимо по всіх радіусах
+                for (int c = 0; c < radii.Count; c++) 
                 {
                     double currentRadius = radii[c];
                     int verticesInThisCircle = 0;
-                    if (c < verticesPerCircleList.Count) // Перевірка на межі списку
+                    if (c < verticesPerCircleList.Count) 
                     {
                         verticesInThisCircle = verticesPerCircleList[c];
                     }
@@ -224,11 +206,11 @@ namespace GraphSolver
 
                     for (int i = 0; i < verticesInThisCircle; i++)
                     {
-                        double angle = i * angularStep + rand.NextDouble() * 0.1; // Додаємо невеликий шум
+                        double angle = i * angularStep + rand.NextDouble() * 0.1; 
                         double x = center_x + currentRadius * Math.Cos(angle);
                         double y = center_y + currentRadius * Math.Sin(angle);
 
-                        // Перевірка, щоб вершини не виходили за межі Canvas з урахуванням padding
+
                         x = Math.Max(padding, Math.Min(canvasWidth - padding, x));
                         y = Math.Max(padding, Math.Min(canvasHeight - padding, y));
 
@@ -338,7 +320,6 @@ namespace GraphSolver
                 return;
             }
 
-            // Використовуємо CultureInfo.InvariantCulture для правильного парсингу числа з плаваючою комою (з крапкою)
             if (!int.TryParse(EdgeSourceIdTextBox.Text, out int sourceId) ||
                 !int.TryParse(EdgeDestinationIdTextBox.Text, out int destinationId) ||
                 !double.TryParse(EdgeWeightTextBox.Text, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double weight))
@@ -413,15 +394,13 @@ namespace GraphSolver
         {
             try
             {
-                // --- ПОЧАТОК: Виправлення для графа з однією вершиною при побудові MST ---
                 if (currentGraph.Vertices.Count < 2)
                 {
                     MessageBox.Show("Мінімальне остовне дерево можна побудувати тільки для графа, що містить щонайменше дві вершини.", "Помилка MST", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ClearResults(); // Очищаємо результати, якщо була спроба розрахунку
-                    AlgorithmComplexityTextBlock.Text = "Практична складність: -"; // Очищаємо складність
+                    ClearResults(); 
+                    AlgorithmComplexityTextBlock.Text = "Практична складність: -"; 
                     return;
                 }
-                // --- КІНЕЦЬ: Виправлення для графа з однією вершиною при побудові MST ---
 
 
                 if (!currentGraph.IsConnected())
@@ -431,7 +410,7 @@ namespace GraphSolver
                 }
 
                 ISpanningTreeAlgorithm selectedAlgorithm;
-                string practicalComplexity = "Не визначено"; // Для відображення складності
+                string practicalComplexity = "Не визначено"; 
 
                 if (PrimRadioButton.IsChecked == true)
                 {
@@ -450,17 +429,12 @@ namespace GraphSolver
                 {
                     selectedAlgorithm = algorithms[1];
 
-                    // ***** ВАШ ПСЕВДОКОД, ПЕРЕРОБЛЕНИЙ В КОД *****
                     bool areVerticesAlmostOnSameHeight = false;
                     if (currentGraph.Vertices.Count > 1)
                     {
                         var yCoordinates = currentGraph.Vertices.Select(v => v.Y).ToList();
                         double minY = yCoordinates.Min();
                         double maxY = yCoordinates.Max();
-
-                        // Визначте поріг "висоти". Це значення потрібно налаштувати
-                        // залежно від діапазону Y-координат ваших вершин.
-                        // Наприклад, якщо різниця Y-координат менше 10.0 одиниць
                         double heightThreshold = 10.0;
 
                         if ((maxY - minY) < heightThreshold)
@@ -471,15 +445,12 @@ namespace GraphSolver
 
                     if (areVerticesAlmostOnSameHeight)
                     {
-                        // Якщо всі вершини графу лежать практично на одній висоті
                         practicalComplexity = "O(E log* V)";
                     }
                     else
                     {
-                        // Інакше
                         practicalComplexity = "O(E log E)";
                     }
-                    // ***** КІНЕЦЬ ВАШОГО ПСЕВДОКОДУ *****
                 }
                 else if (BoruvkaRadioButton.IsChecked == true)
                 {
@@ -505,7 +476,7 @@ namespace GraphSolver
                                                $"{edge.Source.Id} -- {edge.Weight:F0} -- {edge.Destination.Id}"));
 
                 ExecutionTimeTextBlock.Text = $"Час виконання: {timeTaken.TotalMilliseconds:F4} мс";
-                AlgorithmComplexityTextBlock.Text = $"Практична складність: {practicalComplexity}"; // Оновлюємо TextBlock зі складністю
+                AlgorithmComplexityTextBlock.Text = $"Практична складність: {practicalComplexity}"; 
                 DrawGraph();
             }
             catch (Exception ex)
@@ -536,7 +507,7 @@ namespace GraphSolver
             ClearResults();
             fixedVertexPositions.Clear();
             lastFixedVertexCount = 0;
-            AlgorithmComplexityTextBlock.Text = "Практична складність: -"; // Очищаємо складність при очищенні графу
+            AlgorithmComplexityTextBlock.Text = "Практична складність: -"; 
         }
 
         private void DrawGraph(double baseVertexSize = 50)
@@ -552,7 +523,6 @@ namespace GraphSolver
             {
                 edge.IsInSpanningTree = false;
             }
-            // AlgorithmComplexityTextBlock.Text = "Практична складність: -"; // Можна також тут очищати, якщо потрібно
         }
 
         private void DeleteVertexById_Click(object sender, RoutedEventArgs e)

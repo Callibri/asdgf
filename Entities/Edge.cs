@@ -1,5 +1,4 @@
-﻿// File: Edge.cs
-using System;
+﻿using System;
 
 namespace GraphSolver.Entities
 {
@@ -22,7 +21,6 @@ namespace GraphSolver.Entities
         {
             if (obj is Edge other)
             {
-                // Ребра вважаються однаковими, якщо вони з'єднують ті самі дві вершини, незалежно від порядку.
                 return (Source.Equals(other.Source) && Destination.Equals(other.Destination)) ||
                        (Source.Equals(other.Destination) && Destination.Equals(other.Source));
             }
@@ -31,8 +29,7 @@ namespace GraphSolver.Entities
 
         public override int GetHashCode()
         {
-            // Щоб GetHashCode() був консистентним з Equals,
-            // порядок вершин не повинен впливати на хеш-код.
+
             int id1 = Math.Min(Source.Id, Destination.Id);
             int id2 = Math.Max(Source.Id, Destination.Id);
             unchecked

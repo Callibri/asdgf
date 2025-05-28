@@ -7,8 +7,7 @@ using System.Linq;
 
 namespace GraphSolver.Algorithms
 {
-    // Успадкування IComplexityAnalyzable вже відбувається через ISpanningTreeAlgorithm,
-    // тому явне додавання тут не потрібне, але не зашкодить.
+
     public class BoruvkaAlgorithm : ISpanningTreeAlgorithm, IComplexityAnalyzable
     {
         public (List<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph)
@@ -73,24 +72,15 @@ namespace GraphSolver.Algorithms
             return (mst, totalWeight, stopwatch.Elapsed);
         }
 
-        /// <summary>
-        /// Повертає формулу практичної складності алгоритму Борувки для заданого графа.
-        /// </summary>
-        /// <param name="graph">Граф, для якого обчислюється складність.</param>
-        /// <returns>Рядок, що містить формулу складності (наприклад, "O(E log V)").</returns>
+
         public string GetPracticalComplexityFormula(Graph graph)
         {
-            int V = graph.Vertices.Count; // Кількість вершин
-            int E = graph.Edges.Count;    // Кількість ребер
+            int V = graph.Vertices.Count; 
+            int E = graph.Edges.Count;    
 
             if (V == 0) return "O(0) - порожній граф";
 
-            // Теоретична складність алгоритму Борувки: O(E log V) або O(E * log(log V))
-            // Залежить від ефективності реалізації DSU.
-            // З використанням DSU з оптимізаціями (стиснення шляхів та об'єднання за рангом/розміром)
-            // складність становить O(E * α(V)), де α - обернена функція Акермана, що є дуже повільно зростаючою функцією
-            // і практично дорівнює константі. Тому часто спрощується до O(E log V) або навіть O(E) для практичних цілей.
-            // Ми використаємо O(E log V) як загальноприйняту "практичну" складність для цієї реалізації.
+            
             return $"O(E log V) (E={E}, V={V})";
         }
     }

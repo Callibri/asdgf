@@ -1,5 +1,4 @@
-﻿// File: Graph.cs
-using GraphSolver.Entities;
+﻿using GraphSolver.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +28,6 @@ namespace GraphSolver.GraphComponents
         {
             if (vertexToRemove == null) return;
             Vertices.Remove(vertexToRemove);
-            // Видаляємо всі ребра, пов'язані з цією вершиною
             Edges.RemoveAll(e => e.Source.Equals(vertexToRemove) || e.Destination.Equals(vertexToRemove));
         }
 
@@ -39,7 +37,6 @@ namespace GraphSolver.GraphComponents
             {
                 throw new ArgumentException("Source or destination vertex not found in graph.");
             }
-            // Перевірка на існування дублікатів ребер (без напрямку)
             if (Edges.Any(e => (e.Source.Equals(source) && e.Destination.Equals(destination)) ||
                                (e.Source.Equals(destination) && e.Destination.Equals(source))))
             {
@@ -67,8 +64,8 @@ namespace GraphSolver.GraphComponents
 
         public bool IsConnected()
         {
-            if (Vertices.Count == 0) return true; // Порожній граф вважаємо зв'язним
-            if (Vertices.Count == 1) return true; // Граф з однією вершиною завжди зв'язний
+            if (Vertices.Count == 0) return true; 
+            if (Vertices.Count == 1) return true; 
 
             HashSet<Vertex> visited = new HashSet<Vertex>();
             Queue<Vertex> queue = new Queue<Vertex>();
@@ -82,8 +79,7 @@ namespace GraphSolver.GraphComponents
                 Vertex current = queue.Dequeue();
                 var neighbors = Edges
                     .Where(e => e.Source.Equals(current) || e.Destination.Equals(current))
-                    .Select(e => e.Source.Equals(current) ? e.Destination : e.Source) // Отримуємо протилежну вершину
-                    .Where(v => !visited.Contains(v))
+                    .Select(e => e.Source.Equals(current) ? e.Destination : e.Source) 
                     .ToList();
 
                 foreach (var neighbor in neighbors)

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace GraphSolver.Algorithms
 {
-    public class PrimAlgorithm : ISpanningTreeAlgorithm // Вже успадковує IComplexityAnalyzable через ISpanningTreeAlgorithm
+    public class PrimAlgorithm : ISpanningTreeAlgorithm 
     {
         public (List<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph)
         {
@@ -68,7 +68,7 @@ namespace GraphSolver.Algorithms
 
                     foreach (var newEdge in graph.Edges.Where(e =>
                         (e.Source.Equals(unvisitedVertex) || e.Destination.Equals(unvisitedVertex)) &&
-                        (!visited.Contains(e.Source) || !visited.Contains(e.Destination)))) // Тільки якщо одна з вершин ще не відвідана
+                        (!visited.Contains(e.Source) || !visited.Contains(e.Destination)))) 
                     {
                         priorityQueue.Add(newEdge);
                     }
