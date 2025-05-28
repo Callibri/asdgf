@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GraphSolver")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c485d831a8b63d22f6bdb4fe51bc8ed243167d7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c9c40e021c1addd46c189a033fd562ccc5fdda7d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GraphSolver")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GraphSolver")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
