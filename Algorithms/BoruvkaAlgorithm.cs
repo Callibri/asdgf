@@ -1,4 +1,4 @@
-﻿using GraphSolver.Entities;
+GraphSolver.Entities;
 using GraphSolver.GraphComponents;
 using System;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace GraphSolver.Algorithms
 
     public class BoruvkaAlgorithm : ISpanningTreeAlgorithm, IComplexityAnalyzable
     {
-        public (List<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph)
+        public (HashSet<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph)
         {
             var stopwatch = Stopwatch.StartNew();
-            var mst = new List<Edge>();
+            var mst = new HashSet<Edge>(); 
             double totalWeight = 0;
 
             if (graph.Vertices.Count == 0)
@@ -31,8 +31,8 @@ namespace GraphSolver.Algorithms
 
                 foreach (var edge in graph.Edges)
                 {
-                    var root1 = ds.Find(edge.Source);
-                    var root2 = ds.Find(edge.Destination);
+                    var root1 = ds.Find(edge.Source); 
+                    var root2 = ds.Find(edge.Destination); 
 
                     if (!root1.Equals(root2))
                     {
@@ -52,18 +52,19 @@ namespace GraphSolver.Algorithms
                     break;
                 }
 
-                foreach (var entry in cheapestEdge.ToList())
+                foreach (var entry in cheapestEdge.ToList()) 
                 {
                     var edge = entry.Value;
                     var root1 = ds.Find(edge.Source);
                     var root2 = ds.Find(edge.Destination);
 
+
                     if (!root1.Equals(root2))
                     {
-                        mst.Add(edge);
-                        totalWeight += edge.Weight;
-                        ds.Union(edge.Source, edge.Destination);
-                        numComponents--;
+                        mst.Add(edge); 
+                        totalWeight += edge.Weight; 
+                        ds.Union(edge.Source, edge.Destination); 
+                        numComponents--; 
                     }
                 }
             }
@@ -75,12 +76,11 @@ namespace GraphSolver.Algorithms
 
         public string GetPracticalComplexityFormula(Graph graph)
         {
-            int V = graph.Vertices.Count; 
-            int E = graph.Edges.Count;    
+            int V = graph.Vertices.Count;
+            int E = graph.Edges.Count;
 
             if (V == 0) return "O(0) - порожній граф";
 
-            
             return $"O(E log V) (E={E}, V={V})";
         }
     }
