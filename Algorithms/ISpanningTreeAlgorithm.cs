@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 namespace GraphSolver.Algorithms
 {
-    public interface ISpanningTreeAlgorithm : IComplexityAnalyzable 
+    public interface ISpanningTreeAlgorithm : IComplexityAnalyzable
     {
-        (List<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph);
+        (HashSet<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph);
     }
 }
