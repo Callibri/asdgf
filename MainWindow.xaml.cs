@@ -12,6 +12,7 @@ using GraphSolver.Entities;
 using GraphSolver.GraphComponents;
 using GraphSolver.Algorithms;
 using GraphSolver.Rendering;
+using System.Threading.Tasks; 
 
 namespace GraphSolver
 {
@@ -35,10 +36,10 @@ namespace GraphSolver
                 new BoruvkaAlgorithm()
             };
             DrawGraph();
-            AttachInputValidationHandlers(); 
+            AttachInputValidationHandlers();
         }
 
-    
+
         private void AttachInputValidationHandlers()
         {
             if (NumVerticesTextBox != null) NumVerticesTextBox.PreviewTextInput += NumberValidationTextBox;
@@ -86,7 +87,7 @@ namespace GraphSolver
 
         private void GraphCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            const int MAX_VERTICES_MANUAL = 40; 
+            const int MAX_VERTICES_MANUAL = 40;
             if (currentGraph.Vertices.Count >= MAX_VERTICES_MANUAL)
             {
                 MessageBox.Show($"Досягнуто максимальну кількість вершин ({MAX_VERTICES_MANUAL}). Нові вершини не можуть бути додані вручну.", "Обмеження вершин", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -99,217 +100,211 @@ namespace GraphSolver
             ClearResults();
         }
 
-        private void GenerateGraph_Click(object sender, RoutedEventArgs e)
+        private async void GenerateGraph_Click(object sender, RoutedEventArgs e)
         {
-            currentGraph.Clear(); 
-            fixedVertexPositions.Clear(); 
-            lastFixedVertexCount = 0; 
+            (sender as Button).IsEnabled = false;
+            Mouse.OverrideCursor = Cursors.Wait;
 
-            const int MAX_VERTICES = 40; 
-            double baseVertexSize = 50;
-
-            if (!int.TryParse(NumVerticesTextBox.Text, out int numVertices) || numVertices <= 0 || numVertices > MAX_VERTICES)
-            {
-                MessageBox.Show($"Будь ласка, введіть коректну кількість вершин (від 1 до {MAX_VERTICES}).", "Помилка вводу", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            if (numVertices == 1)
+            try
             {
                 currentGraph.Clear();
                 fixedVertexPositions.Clear();
                 lastFixedVertexCount = 0;
 
-                double center_x = GraphCanvas.ActualWidth / 2;
-                double center_y = GraphCanvas.ActualHeight / 2;
-                fixedVertexPositions[1] = new Point(center_x, center_y);
-                currentGraph.AddVertex(new Vertex(1, center_x, center_y));
+                const int MAX_VERTICES = 40;
+                double baseVertexSize = 50;
+
+                if (!int.TryParse(NumVerticesTextBox.Text, out int numVertices) || numVertices <= 0 || numVertices > MAX_VERTICES)
+                {
+                    MessageBox.Show($"Будь ласка, введіть коректну кількість вершин (від 1 до {MAX_VERTICES}).", "Помилка вводу", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (numVertices == 1)
+                {
+                    currentGraph.Clear();
+                    fixedVertexPositions.Clear();
+                    lastFixedVertexCount = 0;
+
+                    double center_x = GraphCanvas.ActualWidth / 2;
+                    double center_y = GraphCanvas.ActualHeight / 2;
+                    fixedVertexPositions[1] = new Point(center_x, center_y);
+                    currentGraph.AddVertex(new Vertex(1, center_x, center_y));
+                    DrawGraph(baseVertexSize);
+                    MessageBox.Show("Згенеровано граф з однією вершиною.", "Генерація графу", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                await Task.Run(() =>
+                {
+                    if (numVertices != lastFixedVertexCount || fixedVertexPositions.Count == 0)
+                    {
+                        fixedVertexPositions.Clear();
+                        currentGraph.Clear();
+
+                        double padding = 50;
+                        double canvasWidth = GraphCanvas.ActualWidth;
+                        double canvasHeight = GraphCanvas.ActualHeight;
+
+                        double center_x = canvasWidth / 2;
+                        double center_y = canvasHeight / 2;
+                        double max_radius = Math.Min(canvasWidth, canvasHeight) / 2 - padding;
+
+                        List<double> radii = new List<double> { max_radius, max_radius * 0.6, max_radius * 0.3 };
+
+                        int outerCircleVertices = (int)Math.Floor(numVertices * 0.60);
+                        int middleCircleVertices = (int)Math.Floor(numVertices * 0.30);
+                        int innerCircleVertices = numVertices - outerCircleVertices - middleCircleVertices;
+
+                        if (innerCircleVertices < 0)
+                        {
+                            middleCircleVertices += innerCircleVertices; 
+                            innerCircleVertices = 0;
+                        }
+                        if (middleCircleVertices < 0)
+                        {
+                            outerCircleVertices += middleCircleVertices; 
+                            middleCircleVertices = 0;
+                        }
+                        outerCircleVertices = numVertices - middleCircleVertices - innerCircleVertices;
+
+                        List<int> verticesPerCircleList = new List<int> { outerCircleVertices, middleCircleVertices, innerCircleVertices };
+
+                        int currentVertexId = 1;
+                        for (int c = 0; c < radii.Count; c++)
+                        {
+                            double currentRadius = radii[c];
+                            int verticesInThisCircle = verticesPerCircleList[c];
+
+                            if (verticesInThisCircle <= 0) continue;
+
+                            double angularStep = (2 * Math.PI) / verticesInThisCircle;
+
+                            for (int i = 0; i < verticesInThisCircle; i++)
+                            {
+                                double angle = i * angularStep + rand.NextDouble() * 0.1; 
+                                double x = center_x + currentRadius * Math.Cos(angle);
+                                double y = center_y + currentRadius * Math.Sin(angle);
+
+                                x = Math.Max(padding, Math.Min(canvasWidth - padding, x));
+                                y = Math.Max(padding, Math.Min(canvasHeight - padding, y));
+
+                                fixedVertexPositions[currentVertexId] = new Point(x, y);
+                                currentVertexId++;
+                            }
+                        }
+                        lastFixedVertexCount = numVertices;
+                    }
+                    else
+                    {
+                        currentGraph.ClearEdges(); 
+                    }
+
+                    foreach (var entry in fixedVertexPositions)
+                    {
+                        currentGraph.AddVertex(new Vertex(entry.Key, entry.Value.X, entry.Value.Y));
+                    }
+
+                    double densityFactor;
+                    if (numVertices >= 1 && numVertices <= 10)
+                    {
+                        densityFactor = 0.4; 
+                    }
+                    else if (numVertices >= 30 && numVertices <= 40)
+                    {
+                        densityFactor = 0.1; 
+                    }
+                    else if (numVertices >= 11 && numVertices <= 18)
+                    {
+                        densityFactor = 0.25; 
+                    }
+                    else
+                    {
+                        densityFactor = 0.2; 
+                    }
+
+                    int targetEdges = (int)(numVertices * (numVertices - 1) / 2 * densityFactor);
+                    if (targetEdges < numVertices - 1 && numVertices > 1)
+                    {
+                        targetEdges = numVertices - 1;
+                    }
+
+                    List<Tuple<Vertex, Vertex, double>> potentialEdges = new List<Tuple<Vertex, Vertex, double>>();
+                    for (int i = 0; i < currentGraph.Vertices.Count; i++)
+                    {
+                        for (int j = i + 1; j < currentGraph.Vertices.Count; j++)
+                        {
+                            Vertex v1 = currentGraph.Vertices[i];
+                            Vertex v2 = currentGraph.Vertices[j];
+                            double distance = Math.Sqrt(Math.Pow(v1.X - v2.X, 2) + Math.Pow(v1.Y - v2.Y, 2));
+                            potentialEdges.Add(Tuple.Create(v1, v2, distance));
+                        }
+                    }
+                    potentialEdges = potentialEdges.OrderBy(e => e.Item3).ToList();
+
+                    var dsForConnectivity = new DisjointSet(currentGraph.Vertices);
+                    int currentComponents = numVertices;
+
+                    foreach (var potentialEdge in potentialEdges)
+                    {
+
+                        if (currentComponents == 1 && currentGraph.Edges.Count >= targetEdges)
+                        {
+                            break;
+                        }
+
+                        Vertex v1 = potentialEdge.Item1;
+                        Vertex v2 = potentialEdge.Item2;
+                        double weight = rand.Next(1, 50); 
+
+                        if (!dsForConnectivity.Find(v1).Equals(dsForConnectivity.Find(v2)))
+                        {
+                            currentGraph.AddEdge(v1, v2, weight);
+                            dsForConnectivity.Union(v1, v2);
+                            currentComponents--;
+                        }
+                        else if (currentGraph.Edges.Count < targetEdges)
+                        {
+                            currentGraph.AddEdge(v1, v2, weight);
+                        }
+                    }
+
+                    int connectivityAttempts = 0;
+                    int maxConnectivityAttempts = numVertices * (numVertices - 1) / 2; 
+                    while (!currentGraph.IsConnected() && connectivityAttempts < maxConnectivityAttempts)
+                    {
+                        Vertex v1 = currentGraph.Vertices[rand.Next(currentGraph.Vertices.Count)];
+                        Vertex v2 = currentGraph.Vertices[rand.Next(currentGraph.Vertices.Count)];
+
+                        if (v1.Equals(v2)) continue;
+
+                        try
+                        {
+                            currentGraph.AddEdge(v1, v2, rand.Next(1, 50));
+                        }
+                        catch (ArgumentException)
+                        {
+                        }
+                        connectivityAttempts++;
+                    }
+                }); 
+
+                if (!currentGraph.IsConnected() && currentGraph.Vertices.Count > 1)
+                {
+                    MessageBox.Show("Не вдалося зробити граф зв'язним після генерації. Спробуйте збільшити кількість вершин або перегенерувати.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+
                 DrawGraph(baseVertexSize);
-                MessageBox.Show("Згенеровано граф з однією вершиною.", "Генерація графу", MessageBoxButton.OK, MessageBoxImage.Information);
-                return; 
             }
-
-
-            if (numVertices != lastFixedVertexCount || fixedVertexPositions.Count == 0)
+            catch (Exception ex)
             {
-                fixedVertexPositions.Clear();
-                currentGraph.Clear();
-
-                double padding = 50;
-                double canvasWidth = GraphCanvas.ActualWidth;
-                double canvasHeight = GraphCanvas.ActualHeight;
-
-                double center_x = canvasWidth / 2;
-                double center_y = canvasHeight / 2;
-                double max_radius = Math.Min(canvasWidth, canvasHeight) / 2 - padding;
-
-                List<double> radii = new List<double>();
-                double innerRadius = max_radius * 0.3;
-                double middleRadius = max_radius * 0.6;
-                double outerRadius = max_radius;
-
-                radii.Add(outerRadius);
-                radii.Add(middleRadius);
-                radii.Add(innerRadius);
-
-                
-                int[] counts = new int[3]; 
-
-                counts[0] = (int)Math.Floor(numVertices * 0.60);
-                counts[1] = (int)Math.Floor(numVertices * 0.30);
-                counts[2] = numVertices - counts[0] - counts[1]; 
-  
-                for (int i = 0; i < counts.Length; i++)
-                {
-                    if (counts[i] < 0) counts[i] = 0;
-                }
-
-                int currentSum = counts.Sum();
-                while (currentSum < numVertices)
-                {
-                    
-                    if (counts[0] < numVertices) { counts[0]++; }
-                    else if (counts[1] < numVertices) { counts[1]++; }
-                    else { counts[2]++; } 
-                    currentSum = counts.Sum();
-                }
-
-                while (currentSum > numVertices)
-                {
-                    if (counts[2] > 0) { counts[2]--; }
-                    else if (counts[1] > 0) { counts[1]--; }
-                    else { counts[0]--; } 
-                    currentSum = counts.Sum();
-                }
-
-                int outerCircleVertices = counts[0];
-                int middleCircleVertices = counts[1];
-                int innerCircleVertices = counts[2];
-
-
-                List<int> verticesPerCircleList = new List<int> { outerCircleVertices, middleCircleVertices, innerCircleVertices };
-
-
-                int currentVertexId = 1;
-                for (int c = 0; c < radii.Count; c++) 
-                {
-                    double currentRadius = radii[c];
-                    int verticesInThisCircle = 0;
-                    if (c < verticesPerCircleList.Count) 
-                    {
-                        verticesInThisCircle = verticesPerCircleList[c];
-                    }
-
-                    if (verticesInThisCircle <= 0) continue;
-
-                    double angularStep = (2 * Math.PI) / verticesInThisCircle;
-
-                    for (int i = 0; i < verticesInThisCircle; i++)
-                    {
-                        double angle = i * angularStep + rand.NextDouble() * 0.1; 
-                        double x = center_x + currentRadius * Math.Cos(angle);
-                        double y = center_y + currentRadius * Math.Sin(angle);
-
-
-                        x = Math.Max(padding, Math.Min(canvasWidth - padding, x));
-                        y = Math.Max(padding, Math.Min(canvasHeight - padding, y));
-
-                        fixedVertexPositions[currentVertexId] = new Point(x, y);
-                        currentVertexId++;
-                    }
-                }
-                lastFixedVertexCount = numVertices;
+                MessageBox.Show($"Помилка генерації графа: {ex.Message}", "Помилка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            else
+            finally
             {
-                currentGraph.ClearEdges();
+                (sender as Button).IsEnabled = true;
+                Mouse.OverrideCursor = Cursors.Arrow;
             }
-
-            foreach (var entry in fixedVertexPositions)
-            {
-                currentGraph.AddVertex(new Vertex(entry.Key, entry.Value.X, entry.Value.Y));
-            }
-
-            double densityFactor;
-            if (numVertices >= 1 && numVertices <= 15)
-            {
-                densityFactor = 0.4;
-            }
-            else if (numVertices >= 30 && numVertices <= 40)
-            {
-                densityFactor = 0.1;
-            }
-            else
-            {
-                densityFactor = 0.2;
-            }
-
-
-            int targetEdges = (int)(numVertices * (numVertices - 1) / 2 * densityFactor);
-            if (targetEdges < numVertices - 1 && numVertices > 1)
-            {
-                targetEdges = numVertices - 1;
-            }
-
-
-            List<Tuple<Vertex, Vertex, double>> potentialEdges = new List<Tuple<Vertex, Vertex, double>>();
-
-            for (int i = 0; i < currentGraph.Vertices.Count; i++)
-            {
-                for (int j = i + 1; j < currentGraph.Vertices.Count; j++)
-                {
-                    Vertex v1 = currentGraph.Vertices[i];
-                    Vertex v2 = currentGraph.Vertices[j];
-                    double distance = Math.Sqrt(Math.Pow(v1.X - v2.X, 2) + Math.Pow(v1.Y - v2.Y, 2));
-                    potentialEdges.Add(Tuple.Create(v1, v2, distance));
-                }
-            }
-
-            potentialEdges = potentialEdges.OrderBy(e => e.Item3).ToList();
-
-            foreach (var potentialEdge in potentialEdges)
-            {
-                if (currentGraph.Edges.Count >= targetEdges && currentGraph.IsConnected())
-                {
-                    break;
-                }
-
-                Vertex v1 = potentialEdge.Item1;
-                Vertex v2 = potentialEdge.Item2;
-                double weight = rand.Next(1, 50);
-
-                if (!currentGraph.Edges.Any(e =>
-                    (e.Source.Equals(v1) && e.Destination.Equals(v2)) ||
-                    (e.Source.Equals(v2) && e.Destination.Equals(v1))))
-                {
-                    currentGraph.AddEdge(v1, v2, weight);
-                }
-            }
-
-            int connectivityAttempts = 0;
-            int maxConnectivityAttempts = numVertices * (numVertices - 1);
-            while (!currentGraph.IsConnected() && connectivityAttempts < maxConnectivityAttempts)
-            {
-                Vertex v1 = currentGraph.Vertices[rand.Next(currentGraph.Vertices.Count)];
-                Vertex v2 = currentGraph.Vertices[rand.Next(currentGraph.Vertices.Count)];
-
-                if (v1.Equals(v2)) continue;
-
-                if (!currentGraph.Edges.Any(e =>
-                    (e.Source.Equals(v1) && e.Destination.Equals(v2)) ||
-                    (e.Source.Equals(v2) && e.Destination.Equals(v1))))
-                {
-                    currentGraph.AddEdge(v1, v2, rand.Next(1, 50));
-                }
-                connectivityAttempts++;
-            }
-
-            if (!currentGraph.IsConnected() && currentGraph.Vertices.Count > 1)
-            {
-                MessageBox.Show("Не вдалося зробити граф зв'язним після генерації. Спробуйте збільшити кількість вершин або перегенерувати.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-
-            DrawGraph(baseVertexSize);
         }
 
         private void AddEdgeManual_Click(object sender, RoutedEventArgs e)
@@ -343,15 +338,22 @@ namespace GraphSolver
                 return;
             }
 
-            if (currentGraph.Edges.Any(edge =>
-                (edge.Source.Equals(sourceVertex) && edge.Destination.Equals(destinationVertex)) ||
-                (edge.Source.Equals(destinationVertex) && edge.Destination.Equals(sourceVertex))))
+            if (currentGraph.Edges.Contains(new Edge(sourceVertex, destinationVertex, 0)))
             {
-                MessageBox.Show("Ребро між цими вершинами вже існує. Оновіть його вагу, якщо потрібно.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Ребро між цими вершинами вже існує.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            currentGraph.AddEdge(sourceVertex, destinationVertex, weight);
+            try
+            {
+                currentGraph.AddEdge(sourceVertex, destinationVertex, weight);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Помилка додавання ребра", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             DrawGraph();
             ClearResults();
         }
@@ -366,18 +368,14 @@ namespace GraphSolver
 
             Vertex v1, v2;
             int attempts = 0;
-            const int MAX_ATTEMPTS = 200;
-
+            const int MAX_ATTEMPTS = 200; 
             do
             {
                 v1 = currentGraph.Vertices[rand.Next(currentGraph.Vertices.Count)];
                 v2 = currentGraph.Vertices[rand.Next(currentGraph.Vertices.Count)];
                 attempts++;
             } while (v1.Equals(v2) ||
-                     currentGraph.Edges.Any(edge =>
-                         (edge.Source.Equals(v1) && edge.Destination.Equals(v2)) ||
-                         (edge.Source.Equals(v2) && edge.Destination.Equals(v1))) && attempts < MAX_ATTEMPTS);
-
+                     currentGraph.Edges.Contains(new Edge(v1, v2, 0)) && attempts < MAX_ATTEMPTS); 
             if (attempts == MAX_ATTEMPTS)
             {
                 MessageBox.Show("Не вдалося знайти унікальну пару вершин для додавання рандомного ребра. Граф може бути занадто щільним.", "Попередження", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -385,20 +383,32 @@ namespace GraphSolver
             }
 
             double weight = rand.Next(1, 100);
-            currentGraph.AddEdge(v1, v2, weight);
+            try
+            {
+                currentGraph.AddEdge(v1, v2, weight);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Помилка додавання випадкового ребра", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             DrawGraph();
             ClearResults();
         }
 
-        private void BuildMST_Click(object sender, RoutedEventArgs e)
+        private async void BuildMST_Click(object sender, RoutedEventArgs e)
         {
+            (sender as Button).IsEnabled = false;
+            Mouse.OverrideCursor = Cursors.Wait;
+
             try
             {
                 if (currentGraph.Vertices.Count < 2)
                 {
                     MessageBox.Show("Мінімальне остовне дерево можна побудувати тільки для графа, що містить щонайменше дві вершини.", "Помилка MST", MessageBoxButton.OK, MessageBoxImage.Information);
-                    ClearResults(); 
-                    AlgorithmComplexityTextBlock.Text = "Практична складність: -"; 
+                    ClearResults();
+                    AlgorithmComplexityTextBlock.Text = "Практична складність: -";
                     return;
                 }
 
@@ -410,7 +420,7 @@ namespace GraphSolver
                 }
 
                 ISpanningTreeAlgorithm selectedAlgorithm;
-                string practicalComplexity = "Не визначено"; 
+                string practicalComplexity = "Не визначено";
 
                 if (PrimRadioButton.IsChecked == true)
                 {
@@ -422,12 +432,13 @@ namespace GraphSolver
                     }
                     else
                     {
-                        practicalComplexity = "O(E + V log V)";
+                        practicalComplexity = "O((V + E) log V)"; 
                     }
                 }
                 else if (KruskalRadioButton.IsChecked == true)
                 {
                     selectedAlgorithm = algorithms[1];
+
 
                     bool areVerticesAlmostOnSameHeight = false;
                     if (currentGraph.Vertices.Count > 1)
@@ -435,7 +446,7 @@ namespace GraphSolver
                         var yCoordinates = currentGraph.Vertices.Select(v => v.Y).ToList();
                         double minY = yCoordinates.Min();
                         double maxY = yCoordinates.Max();
-                        double heightThreshold = 10.0;
+                        double heightThreshold = 10.0; 
 
                         if ((maxY - minY) < heightThreshold)
                         {
@@ -445,7 +456,7 @@ namespace GraphSolver
 
                     if (areVerticesAlmostOnSameHeight)
                     {
-                        practicalComplexity = "O(E log* V)";
+                        practicalComplexity = "O(E log* V)"; 
                     }
                     else
                     {
@@ -463,10 +474,13 @@ namespace GraphSolver
                     return;
                 }
 
-                var (mstEdges, totalWeight, timeTaken) = selectedAlgorithm.FindMST(currentGraph);
+                var (mstEdges, totalWeight, timeTaken) = await Task.Run(() => selectedAlgorithm.FindMST(currentGraph));
+
 
                 foreach (var edge in currentGraph.Edges)
+                {
                     edge.IsInSpanningTree = mstEdges.Contains(edge);
+                }
 
                 ResultOutputTextBox.Text = $"МОД ({selectedAlgorithm.GetType().Name.Replace("Algorithm", "")}):\n" +
                                            $"Загальна вага: {totalWeight:F2}\n" +
@@ -476,12 +490,18 @@ namespace GraphSolver
                                                $"{edge.Source.Id} -- {edge.Weight:F0} -- {edge.Destination.Id}"));
 
                 ExecutionTimeTextBlock.Text = $"Час виконання: {timeTaken.TotalMilliseconds:F4} мс";
-                AlgorithmComplexityTextBlock.Text = $"Практична складність: {practicalComplexity}"; 
+                AlgorithmComplexityTextBlock.Text = $"Практична складність: {practicalComplexity}";
                 DrawGraph();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Помилка: {ex.Message}", "Помилка виконання", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+
+                (sender as Button).IsEnabled = true;
+                Mouse.OverrideCursor = Cursors.Arrow;
             }
         }
 
@@ -507,7 +527,7 @@ namespace GraphSolver
             ClearResults();
             fixedVertexPositions.Clear();
             lastFixedVertexCount = 0;
-            AlgorithmComplexityTextBlock.Text = "Практична складність: -"; 
+            AlgorithmComplexityTextBlock.Text = "Практична складність: -";
         }
 
         private void DrawGraph(double baseVertexSize = 50)
