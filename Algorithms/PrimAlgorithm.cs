@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace GraphSolver.Algorithms
 {
-    public class PrimAlgorithm : ISpanningTreeAlgorithm 
+    public class PrimAlgorithm : ISpanningTreeAlgorithm
     {
-        public (List<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph)
+        public (HashSet<Edge> spanningTree, double totalWeight, TimeSpan timeTaken) FindMST(Graph graph)
         {
             var stopwatch = Stopwatch.StartNew();
-            var mst = new List<Edge>();
+            var mst = new HashSet<Edge>();
             double totalWeight = 0;
 
             if (graph.Vertices.Count == 0)
@@ -46,10 +46,9 @@ namespace GraphSolver.Algorithms
 
                 if (visited.Contains(cheapestEdge.Source) && visited.Contains(cheapestEdge.Destination))
                 {
-                    priorityQueue.Remove(cheapestEdge); 
-                    continue; 
+                    priorityQueue.Remove(cheapestEdge);
+                    continue;
                 }
-
 
                 if (priorityQueue.Count == 0 && visited.Count < graph.Vertices.Count)
                 {
@@ -57,18 +56,18 @@ namespace GraphSolver.Algorithms
                 }
 
                 priorityQueue.Remove(cheapestEdge); 
-
                 Vertex unvisitedVertex = visited.Contains(cheapestEdge.Source) ? cheapestEdge.Destination : cheapestEdge.Source;
 
                 if (!visited.Contains(unvisitedVertex))
                 {
-                    mst.Add(cheapestEdge);
-                    totalWeight += cheapestEdge.Weight;
-                    visited.Add(unvisitedVertex);
+                    mst.Add(cheapestEdge); 
+                    totalWeight += cheapestEdge.Weight; 
+                    visited.Add(unvisitedVertex); 
+
 
                     foreach (var newEdge in graph.Edges.Where(e =>
                         (e.Source.Equals(unvisitedVertex) || e.Destination.Equals(unvisitedVertex)) &&
-                        (!visited.Contains(e.Source) || !visited.Contains(e.Destination)))) 
+                        (!visited.Contains(e.Source) || !visited.Contains(e.Destination))))
                     {
                         priorityQueue.Add(newEdge);
                     }
@@ -81,18 +80,18 @@ namespace GraphSolver.Algorithms
 
         public string GetPracticalComplexityFormula(Graph graph)
         {
-            int V = graph.Vertices.Count; 
-            int E = graph.Edges.Count;    
+            int V = graph.Vertices.Count;
+            int E = graph.Edges.Count;
 
             if (V == 0) return "O(0) - порожній граф";
 
             if (V < 10)
             {
-                return "O(V²)";
+                return "O(V²)"; 
             }
             else
             {
-                return "O((V + E) log V)";
+                return "O((V + E) log V)"; 
             }
         }
     }
